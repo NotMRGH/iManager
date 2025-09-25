@@ -216,7 +216,7 @@ update_manager() {
         echo -e "${RED}Error:${RESET} BotStore directory not found. Please install first."
         read -p "Press Enter to continue..."
         return
-    fi
+    }
 
     echo ">> Stopping service..."
     sudo systemctl stop "$SERVICE_NAME" 2>/dev/null
