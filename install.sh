@@ -92,9 +92,9 @@ EOF
     echo -e "Telegram Channel: $TELEGRAM_CHANNEL"
     echo "═══════════════════════════════════════════"
 
-    IP=$(curl -s ifconfig.me || echo "N/A")
-    LOCATION=$(curl -s "http://ip-api.com/json/$IP" | jq -r '.country' 2>/dev/null || echo "Unknown")
-    ISP=$(curl -s "http://ip-api.com/json/$IP" | jq -r '.isp' 2>/dev/null || echo "Unknown")
+    IP=$(curl -4 -s ifconfig.me || echo "N/A")
+    LOCATION=$(curl -4 -s "http://ip-api.com/json/$IP" | jq -r '.country' 2>/dev/null || echo "Unknown")
+    ISP=$(curl -4 -s "http://ip-api.com/json/$IP" | jq -r '.isp' 2>/dev/null || echo "Unknown")
 
     echo "IP Address: $IP"
     echo "Location: $LOCATION"
@@ -119,7 +119,7 @@ install_manager() {
     }
 
     echo ">> Downloading libraries..."
-    if ! curl -fsSL -o lib.zip -H "Authorization: Bearer $TOKEN" \
+    if ! curl -4 -fsSL -o lib.zip -H "Authorization: Bearer $TOKEN" \
         "https://api.botstore.top/api/downloadFile?name=lib.zip"; then
         echo -e "${RED}Error:${RESET} Failed to download lib.zip"
         echo "Please check your token and internet connection."
@@ -137,7 +137,7 @@ install_manager() {
     rm lib.zip
 
     echo ">> Downloading core..."
-    if ! curl -fsSL -o "$CORE_FILE" -H "Authorization: Bearer $TOKEN" \
+    if ! curl -4 -fsSL -o "$CORE_FILE" -H "Authorization: Bearer $TOKEN" \
         "https://api.botstore.top/api/downloadFile?name=manager.jar"; then
         echo -e "${RED}Error:${RESET} Failed to download manager.jar"
         echo "Please check your token and internet connection."
@@ -216,7 +216,7 @@ update_manager() {
         echo -e "${RED}Error:${RESET} BotStore directory not found. Please install first."
         read -p "Press Enter to continue..."
         return
-    }
+    fi
 
     echo ">> Stopping service..."
     sudo systemctl stop "$SERVICE_NAME" 2>/dev/null
@@ -243,7 +243,7 @@ update_manager() {
     rm -f config.yml
 
     echo ">> Downloading libraries..."
-    if ! curl -fsSL -o lib.zip -H "Authorization: Bearer $TOKEN" \
+    if ! curl -4 -fsSL -o lib.zip -H "Authorization: Bearer $TOKEN" \
         "https://api.botstore.top/api/downloadFile?name=lib.zip"; then
         echo -e "${RED}Error:${RESET} Failed to download lib.zip"
         echo "Please check your token and internet connection."
@@ -265,7 +265,7 @@ update_manager() {
     rm -f lib.zip
 
     echo ">> Downloading new core..."
-    if ! curl -fsSL -o "$CORE_FILE" -H "Authorization: Bearer $TOKEN" \
+    if ! curl -4 -fsSL -o "$CORE_FILE" -H "Authorization: Bearer $TOKEN" \
         "https://api.botstore.top/api/downloadFile?name=manager.jar"; then
         echo -e "${RED}Error:${RESET} Failed to download manager.jar"
         echo "Please check your token and internet connection."
